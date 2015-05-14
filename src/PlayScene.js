@@ -26,11 +26,17 @@ var PlayScene = cc.Scene.extend( {
 		// shapes[0] is runner
 		this.shapesToRemove.push(shapes[1]);
 		
+		// add the collect coin audio effect
+		cc.audioEngine.playEffect(res.pickup_coin_mp3);
+
 		var statusLayer = this.getChildByTag(TagOfLayer.Status);
 		statusLayer.addCoin(1);
 	},
 	collisionRockBegin: function(arbiter, space) {
 		cc.log("==game over");
+		// stop bg music
+		cc.audioEngine.stopMusic();
+
 		cc.director.pause();
 		this.addChild(new GameOverLayer());
 	},
@@ -44,6 +50,9 @@ var PlayScene = cc.Scene.extend( {
 		this.gameLayer.addChild(new AnimationLayer(this.space), 0, TagOfLayer.Animation);
 		this.addChild(this.gameLayer);
 		this.addChild(new StatusLayer(), 0, TagOfLayer.Status);
+		
+		// add backgroune music
+		cc.audioEngine.playMusic(res.background_mp3, true);
 		
 		this.scheduleUpdate();
 	},

@@ -165,7 +165,11 @@ var AnimationLayer = cc.Layer.extend({
 			this.stat = RunnerStat.jumpUp;
 			this.sprite.stopAllActions();
 			this.sprite.runAction(this.jumpUpAction);
+
+			// Jump music
+			cc.audioEngine.playEffect(res.jump_mp3);
 		}
+		
 	},
 	onExit: function() {
 		this.runningAction.release();
